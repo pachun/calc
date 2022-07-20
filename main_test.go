@@ -6,17 +6,13 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/pjbgf/go-test/should"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestAddition(t *testing.T) {
 	app := Run(main, "3 + 3")
 
-	should.New(t).BeEqual(
-		"6\n",
-		app.output(),
-		"Running 'calc 3 + 3' outputs '6'",
-	)
+	assert.Equal(t, app.output(), "6\n")
 
 	app.cleanup()
 }
@@ -24,11 +20,7 @@ func TestAddition(t *testing.T) {
 func TestMultiplication(t *testing.T) {
 	app := Run(main, "3 x 3")
 
-	should.New(t).BeEqual(
-		"9\n",
-		app.output(),
-		"Running 'calc 3 x 3' outputs '9'",
-	)
+	assert.Equal(t, app.output(), "9\n")
 
 	app.cleanup()
 }
