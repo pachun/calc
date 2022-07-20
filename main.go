@@ -1,7 +1,11 @@
 package main
 
-import "fmt"
+import (
+	"os"
+
+	"github.com/pachun/calc/cli"
+)
 
 func main() {
-	fmt.Println("sum total: 2")
+	cli.NewConsole(os.Stdout).Run(os.Args)
 }
