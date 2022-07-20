@@ -10,29 +10,17 @@ import (
 )
 
 func TestMain(t *testing.T) {
-	assertThat := func(
-		assumption string,
-		command string,
-		expectedOutput string,
-	) {
-		should := should.New(t)
-		tmpfile, _ := ioutil.TempFile("", "calc-fake-stdout.*")
-		defer os.Remove(tmpfile.Name())
+	tmpfile, _ := ioutil.TempFile("", "calc-fake-stdout.*")
+	os.Stdout = tmpfile
+	defer os.Remove(tmpfile.Name())
+	os.Args = strings.Split("calc 1 + 1", " ")
 
-		os.Stdout = tmpfile
-		os.Args = strings.Split(command, " ")
+	main()
 
-		main()
-
-		output, _ := ioutil.ReadFile(tmpfile.Name())
-		actualOutput := string(output)
-
-		should.BeEqual(expectedOutput, actualOutput, assumption)
-	}
-
-	assertThat(
-		"should sum 1+1 and return 2",
-		"calc 1 + 1",
+	output, _ := ioutil.ReadFile(tmpfile.Name())
+	should.New(t).BeEqual(
 		"sum total: 2\n",
+		string(output),
+		"should sum 1+1 and return 2",
 	)
 }
