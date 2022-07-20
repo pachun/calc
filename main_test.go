@@ -12,7 +12,7 @@ import (
 func TestAddition(t *testing.T) {
 	app := Run(main, "3 + 3")
 
-	assert.Equal(t, app.output(), "6\n")
+	assert.Equal(t, app.standardOutput(), "6\n")
 
 	app.cleanup()
 }
@@ -20,7 +20,7 @@ func TestAddition(t *testing.T) {
 func TestMultiplication(t *testing.T) {
 	app := Run(main, "3 x 3")
 
-	assert.Equal(t, app.output(), "9\n")
+	assert.Equal(t, app.standardOutput(), "9\n")
 
 	app.cleanup()
 }
@@ -47,7 +47,7 @@ func Run(main func(), commandLineArguments string) commandLineApp {
 	}
 }
 
-func (commandLineApp commandLineApp) output() string {
+func (commandLineApp commandLineApp) standardOutput() string {
 	output, _ := os.ReadFile(commandLineApp.temporaryStandardOutputFile.Name())
 	return string(output)
 }
