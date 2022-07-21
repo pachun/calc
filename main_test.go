@@ -25,6 +25,28 @@ func TestMultiplication(t *testing.T) {
 	app.cleanup()
 }
 
+func TestUnsupportedOperations(t *testing.T) {
+	app := Run(main, "3 - 3")
+
+	assert.Equal(t, app.standardOutput(), "Only addition (+) and multiplication (x) are supported.\n")
+
+	app.cleanup()
+}
+
+func TestNonNumericOperands(t *testing.T) {
+	app1 := Run(main, "Four + 3")
+
+	assert.Equal(t, app1.standardOutput(), "Operands must be numeric.\n")
+
+	app1.cleanup()
+
+	app2 := Run(main, "3 + six")
+
+	assert.Equal(t, app2.standardOutput(), "Operands must be numeric.\n")
+
+	app2.cleanup()
+}
+
 type commandLineApp struct {
 	realStandardOutput          *os.File
 	temporaryStandardOutputFile *os.File
