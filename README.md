@@ -6,10 +6,12 @@ Addition and multiplication on the command line. (My first go project.)
 
 ```
 ./calc 4 + 4
+8
 ```
 
 or
 
 ```
-./calc 5 * 2
+./calc 5 x 2
+10
 ```
